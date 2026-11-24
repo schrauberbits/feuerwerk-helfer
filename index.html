@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Feuerwerk-Helfer – Darf ich hier an Silvester Raketen und Böller zünden?</title>
+<meta name="description" content="Silvester 2026/27: Prüft für deine Adresse, ob Kirchen, Krankenhäuser, Alten- und Kinderheime oder Reetdächer zu nah sind, ob deine Stadt eine Verbotszone hat und wie das Wetter um Mitternacht wird – und zeigt den nächsten Platz mit genug Abstand. Kostenlos, ohne Anmeldung.">
+<style>
+:root{--bg:#f3f3f7;--card:#fff;--ink:#1a1b22;--muted:#5d6070;--line:#dcdde6;--soft:#ebecf2;
+--accent:#3b3f9e;--accent-ink:#fff;--accent-soft:#e2e3f6;--ok:#22703a;--ok-soft:#e1f1e4;--warn:#955b00;--warn-soft:#fbefd8;--bad:#a8281f;--bad-soft:#fae3e0}
+@media (prefers-color-scheme:dark){:root{--bg:#111219;--card:#1b1c26;--ink:#ecedf4;--muted:#a3a6b8;--line:#33354a;--soft:#25263a;
+--accent:#a9adff;--accent-ink:#141638;--accent-soft:#25274a;--ok:#88cf97;--ok-soft:#1b311f;--warn:#e9b25c;--warn-soft:#372b16;--bad:#ef8d83;--bad-soft:#3a1e1b}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:560px;margin:0 auto;padding:18px 16px 60px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:18px}
+.brand{font-weight:700;font-size:1.05rem;display:flex;align-items:center;gap:6px;cursor:pointer;background:none;border:0;color:var(--ink);font-family:inherit;padding:0}
+.brand span{font-size:1.25rem}
+.back{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:6px 0}
+h1{font-size:1.55rem;line-height:1.2;margin:0 0 6px;letter-spacing:-.01em}
+h2{font-size:1.3rem;line-height:1.25;margin:0 0 12px}
+.sub{color:var(--muted);margin:0 0 18px}
+.step{font-size:.85rem;color:var(--muted);margin:16px 0 6px}
+.qlist{display:flex;flex-direction:column;gap:10px}
+.q{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;font:inherit;color:inherit;cursor:pointer;text-decoration:none}
+.q:active,.pill:active{transform:scale(.98)}
+.q .ic{flex:0 0 46px;height:46px;border-radius:12px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;font-size:1.6rem}
+.q b{display:block;font-size:1.05rem}
+.q span{display:block;color:var(--muted);font-size:.88rem}
+.news{background:var(--warn-soft);border-radius:14px;padding:12px 14px;font-size:.92rem;margin:0 0 16px}
+.news b{color:var(--warn)}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:9px 15px;font:inherit;font-size:.93rem;cursor:pointer;min-height:44px}
+.pill.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.field{display:block}
+.field.full{grid-column:1/-1}
+.field span{display:block;font-size:.82rem;color:var(--muted);margin-bottom:4px}
+input[type=text],input[type=search],select{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;height:48px;width:100%}
+input:focus,select:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.answer{margin-top:18px;border-radius:18px;padding:18px;background:var(--ok-soft)}
+.answer.warn{background:var(--warn-soft)}.answer.bad{background:var(--bad-soft)}.answer.info{background:var(--accent-soft)}
+.answer .lbl{font-size:.8rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.answer .say{font-size:1.24rem;font-weight:700;line-height:1.3;margin:6px 0 8px}
+.answer .more{font-size:.95rem}
+.checks{margin:12px 0 0;padding:0;list-style:none}
+.checks li{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line);font-size:.93rem}
+.checks li:last-child{border-bottom:0}
+.dot{flex:0 0 12px;height:12px;border-radius:50%;margin-top:6px;background:var(--ok)}
+.dot.warn{background:var(--warn)}.dot.bad{background:var(--bad)}.dot.info{background:var(--muted)}
+.checks .s{flex:1}
+.checks .s small{display:block;color:var(--muted);font-size:.84rem}
+.radar{display:block;margin:14px auto 0;max-width:320px;width:100%;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.8rem;color:var(--muted);justify-content:center;margin-top:6px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:-1px}
+table.k{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:8px}
+table.k td{padding:6px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+table.k td:last-child{text-align:right;white-space:nowrap}
+.tips{margin:10px 0 0;padding-left:20px;font-size:.92rem}
+.tips li{margin:4px 0}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.btn{border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);border-radius:12px;padding:11px 16px;font:inherit;font-weight:600;cursor:pointer;min-height:46px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn[disabled]{opacity:.6;cursor:wait}
+.msg{font-size:.88rem;color:var(--ok);align-self:center}
+.hint{font-size:.85rem;color:var(--muted);margin:8px 0 0}
+.box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:14px;font-size:.92rem}
+.box b.t{display:block;margin-bottom:4px}
+.box a,.answer a,.hint a,.city a{color:var(--accent)}
+.answer a.btn{color:var(--accent-ink)}
+.err{background:var(--bad-soft);border-radius:14px;padding:12px 14px;margin-top:14px;font-size:.93rem}
+.city{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:8px;font-size:.92rem}
+.city .h{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.city .h b{font-size:1.02rem}
+.city .st{font-size:.78rem;border-radius:999px;padding:2px 8px;white-space:nowrap}
+.st.neu{background:var(--ok-soft);color:var(--ok)}.st.alt{background:var(--warn-soft);color:var(--warn)}.st.keine{background:var(--soft);color:var(--muted)}
+.zone{margin-top:6px}
+.zone b{font-weight:600}
+.zone small{display:block;color:var(--muted)}
+.wx{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:8px;margin-top:10px}
+.wx div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px;text-align:center;font-size:.85rem}
+.wx b{display:block;font-size:1.05rem}
+details.fine{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+details.fine summary{cursor:pointer;color:var(--accent);font-weight:600}
+.hide{display:none!important}
+footer{margin-top:28px;font-size:.8rem;color:var(--muted);text-align:center;line-height:1.5}
+footer a{color:var(--accent)}
+</style>
+<script data-goatcounter="https://schrauberbits.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <button class="brand" id="home" aria-label="Zur Startseite"><span>🎆</span>Feuerwerk-Helfer</button>
+    <button class="back hide" id="back">← Andere Frage</button>
+  </div>
+  <main id="app"></main>
+  <footer>Regeln nach der Ersten Verordnung zum Sprengstoffgesetz (§§ 22–24 1. SprengV) und den Allgemeinverfügungen der Städte; Übersicht der Verbotszonen Stand 24. November 2026 (Jahreswechsel 2026/27, wo schon veröffentlicht, sonst 2025/26). Keine Rechtsberatung – maßgeblich sind die amtliche Bekanntmachung deiner Stadt und Schilder vor Ort.<br>Orte: Daten © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap-Mitwirkende</a> (ODbL), abgefragt über Nominatim und die Overpass-API. Wetter: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a> (CC BY 4.0). Abgefragt wird nur, wenn du selbst auf „Prüfen“ tippst.<br>Kostenlos, ohne Anmeldung, ohne Werbung – ein Hobbyprojekt, mit KI-Hilfe erstellt. Gezählt wird nur anonym und ohne Cookies (mit GoatCounter): wie oft das Programm aufgerufen und benutzt wird und über welchen Link – ohne persönliche Daten und ohne deine Eingaben.<br>Mehr Helfer: <a href="https://schrauberbits.github.io/silvester-helfer/">Silvester mit Haustier</a> · <a href="https://schrauberbits.github.io/feiertags-helfer/">Feiertags-Helfer</a> · <a href="https://schrauberbits.github.io/festessen-helfer/">Festessen-Helfer</a> · <a href="https://schrauberbits.github.io/paket-helfer/">Paket-Helfer</a></footer>
+</div>
+
+<script>
+// ================= Grundlagen =================
+const app=document.getElementById('app');
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const WT=['So','Mo','Di','Mi','Do','Fr','Sa'];
+const MON=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+const dLesen=s=>{if(!/^\d{4}-\d{2}-\d{2}$/.test(s||''))return null;const [y,m,d]=s.split('-').map(Number);const t=new Date(y,m-1,d);return t.getMonth()===m-1?t:null;};
+const dWert=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const dKurz=d=>WT[d.getDay()]+' '+d.getDate()+'.'+(d.getMonth()+1)+'.';
+const plus=(d,n)=>new Date(d.getFullYear(),d.getMonth(),d.getDate()+n);
+const tageBis=(a,b)=>Math.round((b-a)/864e5);
+const HEUTE=(()=>{const p=dLesen(new URLSearchParams(location.search).get('heute'));if(p)return p;const d=new Date();return new Date(d.getFullYear(),d.getMonth(),d.getDate());})();
+// Das „Silvester-Jahr“: bis 6. Januar gilt noch der gerade vergangene Jahreswechsel
+const SJ=(HEUTE.getMonth()===0&&HEUTE.getDate()<=6)?HEUTE.getFullYear()-1:HEUTE.getFullYear();
+const SILV=new Date(SJ,11,31), NEUJ=new Date(SJ+1,0,1);
+const meter=m=>m<1000?Math.round(m/5)*5+' m':(m/1000).toFixed(1).replace('.',',')+' km';
+
+// ---------- Zählen: ein Ereignis, sobald der Besucher selbst etwas einstellt ----------
+const REF=((new URLSearchParams(location.search).get('ref')||'ohne').replace(/[^a-z0-9_-]/gi,'').slice(0,40))||'ohne';
+let genutzt=false;
+function senden(path,title,versuch){
+  try{ if(window.goatcounter&&window.goatcounter.count){ window.goatcounter.count({path,title,event:true}); return; } }catch(e){ return; }
+  if(versuch<40) setTimeout(()=>senden(path,title,versuch+1),250);
+}
+function nutzung(e){
+  if(genutzt||!e.isTrusted) return;
+  const t=e.target; if(!(t instanceof Element)) return;
+  if(!(t.matches('input,select')||t.closest('.pill,[data-zahl]'))) return;
+  if(e.type==='click'&&t.matches('input,select')) return; // bloßes Antippen eines Feldes zählt nicht
+  genutzt=true; senden('feuerwerk-nutzung--'+REF,'Feuerwerk-Helfer: Wert geändert ('+REF+')',0);
+}
+['input','change','click'].forEach(ev=>app.addEventListener(ev,nutzung,true));
+
+// ---------- Werte über den Hash: #bereich?wert=… ----------
+function hashTeile(){ const h=location.hash.slice(1), i=h.indexOf('?'); return {seite:i<0?h:h.slice(0,i), p:new URLSearchParams(i<0?'':h.slice(i+1))}; }
+const STANDARD=new Map();
+function vorbelegen(S,p){ if(!STANDARD.has(S)) STANDARD.set(S,Object.assign({},S));
+  if([...p.keys()].some(k=>k in S)) Object.assign(S,STANDARD.get(S));
+  for(const k of Object.keys(S)){ if(p.has(k)) S[k]=p.get(k); } }
+function hashSetzen(seite,S){ const q=new URLSearchParams(), st=STANDARD.get(S)||{}; for(const [k,v] of Object.entries(S)) if(v!==''&&v!=null&&!(k in st&&st[k]===v)) q.set(k,v); history.replaceState(null,'',location.pathname+location.search+'#'+seite+(q.toString()?'?'+q.toString():'')); }
+function teilLink(seite,S){ const q=new URLSearchParams(); for(const [k,v] of Object.entries(S)) if(v!==''&&v!=null) q.set(k,v); return location.origin+location.pathname+'?ref=geteilt#'+seite+'?'+q.toString(); }
+async function teilen(text,url,msgEl){
+  try{ if(navigator.share){ await navigator.share({text,url}); return; } }catch(e){ if(e&&e.name==='AbortError') return; }
+  try{ await navigator.clipboard.writeText(text+'\n'+url); msgEl.textContent='Kopiert – jetzt einfügen und senden.'; }
+  catch(e){ msgEl.textContent=url; }
+}
+function pillReihe(id,opts,wert){ return `<div class="pills" id="${id}">${opts.map(([v,t])=>`<button class="pill${v===wert?' on':''}" data-v="${v}">${t}</button>`).join('')}</div>`; }
+function pillsBinden(id,cb){ document.querySelectorAll('#'+id+' .pill').forEach(b=>b.onclick=()=>{ document.querySelectorAll('#'+id+' .pill').forEach(x=>x.classList.toggle('on',x===b)); cb(b.dataset.v); }); }
+
+// ================= Regeln (Bund) =================
+// § 22 Abs. 1 1. SprengV: Kategorie F2 an Verbraucher nur vom 29. bis 31.12.; fällt einer davon auf einen Sonntag, ab 28.12.
+function verkaufsTage(y){ const a=[new Date(y,11,29),new Date(y,11,30),new Date(y,11,31)]; if(a.some(d=>d.getDay()===0)) a.unshift(new Date(y,11,28)); return a.filter(d=>d.getDay()!==0); }
+// § 23 Abs. 2: F2 ohne Erlaubnis nur am 31.12. und 1.1., ab 18 Jahren. § 23 Abs. 1: nicht in unmittelbarer Nähe von Kirchen, Krankenhäusern, Kinder- und Altersheimen sowie besonders brandempfindlichen Gebäuden oder Anlagen.
+const NAH=200; // „unmittelbare Nähe“: in Rechtsprechung und Allgemeinverfügungen meist rund 200 m (z. B. Hameln: 200 m Luftlinie; BAM-Versuche: Raketen fliegen bis etwa 180 m)
+const ARTEN=[['raketen','🚀 Raketen, Batterien, Fontänen'],['boeller','💥 Böller, Knaller'],['f1','✨ Wunderkerzen, Knallerbsen, Tischfeuerwerk']];
+const ZEITEN=[['mitternacht','Silvester um Mitternacht'],['abend','31.12. abends'],['tag31','31.12. tagsüber'],['tag1','Neujahr'],['anders','an einem anderen Tag']];
+const ZEIT_STUNDE={mitternacht:24,abend:20,tag31:13,tag1:12,anders:null}; // Stunde ab 31.12. 0 Uhr (24 = Mitternacht)
+
+// ================= Städte mit Verbotszonen =================
+// Quelle: amtliche Bekanntmachungen (verlinkt) und die Übersicht silvester-staedte.de (Stand 24.11.2026). gilt: 'boeller' = nur Gegenstände mit reiner Knallwirkung, 'f2' = Kategorie F2 (Raketen, Batterien, Böller …), 'alle' = auch F1.
+// mit: true = auch Mitführen verboten. von/bis: Stunde ab 31.12. 0 Uhr (24 = Mitternacht, 30 = 1.1. 6 Uhr); null = ganztägig 31.12. und 1.1.
+const STAEDTE=[
+ {k:'berlin',n:'Berlin',jahr:'2025/26',neu:'um den 23.12.',url:'https://www.berlin.de/polizei/polizeimeldungen/2025/pressemitteilung.1628885.php',z:[
+  {w:'Alexanderplatz, Steinmetzkiez (Schöneberg), Sonnenallee mit Nebenstraßen (Neukölln), Admiralbrücke (Kreuzberg)',gilt:'f2',mit:true,von:18,bis:30}],
+  extra:'Mehrere Bezirke (z. B. Neukölln, Lichtenberg, Pankow, Reinickendorf) verbieten zusätzlich Böller mit reiner Knallwirkung zu bestimmten Zeiten, etwa am 31.12. vor 18 Uhr – Bekanntmachung deines Bezirks prüfen.'},
+ {k:'hamburg',n:'Hamburg',jahr:'2025/26',neu:'um den 9.12.',z:[{w:'Binnenalster mit Jungfernstieg, Ballindamm, Lombardsbrücke, Reesendamm und Rathausmarkt',gilt:'f2',mit:true,von:18,bis:25}]},
+ {k:'muenchen',n:'München',jahr:'2025/26',neu:'um den 10.12.',url:'https://stadt.muenchen.de/infos/feuerwerk-zum-jahreswechsel-regeln.html',z:[
+  {w:'Fußgängerzone mit Marienplatz und Stachus, Viktualienmarkt',gilt:'f2',mit:true,von:21,bis:26},
+  {w:'innerhalb des Mittleren Rings (Umweltzone)',gilt:'boeller',mit:false,von:null,bis:null},
+  {w:'rund um den Tierpark Hellabrunn',gilt:'f2',mit:false,von:null,bis:null}]},
+ {k:'koeln',n:'Köln',jahr:'2026/27',url:'https://www.stadt-koeln.de/politik-und-verwaltung/presseservice/boellerverbotszone-20252026',z:[
+  {w:'linksrheinisch innerhalb der Ringe (einschließlich der Ringe)',gilt:'boeller',mit:false,von:null,bis:null},
+  {w:'rund um den Dom: Mitnahmeverbot für Feuerwerkskörper aller Art',gilt:'alle',mit:true,von:null,bis:null,unklar:true}]},
+ {k:'frankfurt',n:'Frankfurt am Main',a:['frankfurt'],jahr:'2026/27',z:[{w:'Zeil mit Konstablerwache und Hauptwache, Eiserner Steg und Mainufer',gilt:'f2',mit:true,von:20,bis:30}]},
+ {k:'stuttgart',n:'Stuttgart',jahr:'2025/26',neu:'um den 17.12.',url:'https://www.stuttgart.de/service/aktuelle-meldungen/2025/dezember/feuerwerksverbot-gilt-an-silvester-wieder-in-der-stuttgarter-innenstadt',z:[
+  {w:'innerhalb des Cityrings',gilt:'f2',mit:true,von:18,bis:30},
+  {w:'Grabkapelle auf dem Württemberg und Schloss Solitude (Staatliche Schlösser und Gärten)',gilt:'boeller',mit:false,von:null,bis:null,unklar:true}]},
+ {k:'duesseldorf',n:'Düsseldorf',jahr:'2026/27',url:'https://www.duesseldorf.de/fileadmin/Amt13/bekanntmachungen/2026/26_11/2026-11-02_AV_Mitfuehr-u_Abbrennverbot_2026_2027_web_bf.pdf',z:[{w:'Altstadt mit Burgplatz und Rheinuferpromenade',gilt:'f2',mit:true,von:20,bis:30}]},
+ {k:'hannover',n:'Hannover',jahr:'2025/26',neu:'um den 18.12.',url:'https://www.hannover.de/Service/Presse-Medien/Landeshauptstadt-Hannover/Aktuelle-Meldungen-und-Veranstaltungen/%E2%80%9EB%C3%B6llerverbot%E2%80%9C-in-Hannovers-City',z:[{w:'Innenstadt (City), Straßen laut Allgemeinverfügung – gilt für F2, F3 und F4',gilt:'f2',mit:true,von:20,bis:27}],extra:'Bußgeld laut Stadt in der Regel 200 €.'},
+ {k:'nuernberg',n:'Nürnberg',jahr:'2025/26',neu:'um den 16.12.',url:'https://www.nuernberg.de/internet/stadtportal/silvester_feuerwerk.html',z:[
+  {w:'rund um die Burg (Burgfreiung, Vestnertorbrücke, Ölberg, Burgstraße ab Schildgasse) – auch Glasverbot',gilt:'f2',mit:true,von:21,bis:26},
+  {w:'Altstadt zwischen Königstraße und Burgstraße sowie Jakobsplatz',gilt:'f2',mit:false,von:null,bis:null}]},
+ {k:'bremen',n:'Bremen',jahr:'2025/26',neu:'um den 27.11.',z:[
+  {w:'Schlachte und Teerhofbrücke',gilt:'f2',mit:true,von:18,bis:27},
+  {w:'Bürgermeister-Smidt-Brücke',gilt:'f2',mit:false,von:18,bis:27},
+  {w:'rund um das Rathaus und im Schnoorviertel',gilt:'f2',mit:false,von:null,bis:null}]},
+ {k:'muenster',n:'Münster',jahr:'2025/26',neu:'um den 4.12.',url:'https://www.stadt-muenster.de/aktuelles/newsdetail/feuerwerkverbotszone-am-domplatz-und-prinzipalmarkt',z:[{w:'Domplatz und Prinzipalmarkt',gilt:'alle',mit:true,von:22,bis:28}]},
+ {k:'bochum',n:'Bochum',jahr:'2025/26',neu:'um den 16.12.',url:'https://www.bochum.de/C125830C0042AB74/vwContentByKey/W2CYEAQD200BOCMDE/$File/Allgemeinverfuegung_Mitfuehr_und_Verwendungsverbot_Feuerwerk.pdf',z:[{w:'Bermuda3Eck (Brüderstraße und Umgebung)',gilt:'f2',mit:true,von:20,bis:28}]},
+ {k:'augsburg',n:'Augsburg',jahr:'2026/27',z:[{w:'Innenstadt – Bereich und Zeiten laut Allgemeinverfügung',gilt:'alle',mit:true,von:null,bis:null,unklar:true}]},
+ {k:'regensburg',n:'Regensburg',jahr:'2025/26',z:[{w:'Altstadt, Stadtamhof, Oberer und Unterer Wöhrd',gilt:'f2',mit:true,von:20.5,bis:30}]},
+ {k:'karlsruhe',n:'Karlsruhe',jahr:'2025/26',neu:'um den 16.12.',z:[{w:'Schlossplatz und Marktplatz',gilt:'alle',mit:false,von:null,bis:null}]},
+ {k:'freiburg',n:'Freiburg im Breisgau',a:['freiburg'],jahr:'2025/26',neu:'um den 23.12.',z:[{w:'Münsterplatz',gilt:'alle',mit:false,von:null,bis:null}]},
+ {k:'kassel',n:'Kassel',jahr:'2025/26',neu:'um den 11.12.',z:[{w:'Königsplatz, Obere Königsstraße, Opernplatz, Treppenstraße, Friedrichsplatz mit Nebenstraßen, Florentiner Platz',gilt:'f2',mit:false,von:null,bis:null}]},
+ {k:'wiesbaden',n:'Wiesbaden',jahr:'2025/26',neu:'um den 16.12.',z:[{w:'Bowling Green vor dem Kurhaus (ab 21 Uhr)',gilt:'f2',mit:true,von:21,bis:null,unklar:true}]},
+ {k:'aachen',n:'Aachen',jahr:'2025/26',neu:'um den 1.12.',z:[{w:'historische Innenstadt innerhalb des Grabenrings und Theaterplatz – welche Feuerwerksarten, steht in der Allgemeinverfügung',gilt:'f2',mit:true,von:null,bis:null,unklar:true}]},
+ {k:'braunschweig',n:'Braunschweig',jahr:'2025/26',neu:'um den 23.12.',z:[{w:'Bohlweg-Kolonnaden',gilt:'alle',mit:true,von:18,bis:30}]},
+ {k:'duisburg',n:'Duisburg',jahr:'2026/27',z:[{w:'rund um den Zoo Duisburg und den Kaiserberg',gilt:'f2',mit:false,von:null,bis:null}]},
+ {k:'krefeld',n:'Krefeld',jahr:'2026/27',z:[{w:'Schutzzone um den Zoo',gilt:'f2',mit:true,von:18,bis:30}]},
+ {k:'rostock',n:'Rostock',jahr:'2026/27',z:[{w:'Badestrand (Abschnitte A und B der Strandsatzung)',gilt:'f2',mit:false,von:null,bis:null}]},
+ {k:'wuerzburg',n:'Würzburg',jahr:'2026/27',z:[{w:'Bereich laut Sicherheitsverordnung (§ 11)',gilt:'alle',mit:true,von:22,bis:26,unklar:true}]},
+ {k:'bielefeld',n:'Bielefeld',jahr:'angekündigt',neu:'um den 16.12.',z:[{w:'Boulevard (Regel vom Vorjahr)',gilt:'alle',mit:false,von:22,bis:26}]},
+ {k:'erfurt',n:'Erfurt',jahr:'angekündigt',z:[{w:'Verbot in weiten Teilen der Innenstadt angekündigt – Einzelheiten folgen',gilt:'f2',mit:false,von:null,bis:null,unklar:true}]},
+ {k:'wuppertal',n:'Wuppertal',jahr:'angekündigt',z:[{w:'Verbotszone angekündigt – Einzelheiten folgen',gilt:'f2',mit:false,von:null,bis:null,unklar:true}]},
+];
+const OHNE_ZONE=['Dresden','Leipzig','Heidelberg','Bonn','Dortmund','Kiel','Mainz','Mannheim','Magdeburg','Lübeck','Potsdam','Chemnitz','Mönchengladbach','Halle (Saale)','Gelsenkirchen'];
+const norm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ß/g,'ss').replace(/\s*\(.*\)/,'').trim();
+function stadtFinden(name){ const n=norm(name); if(!n) return null; return STAEDTE.find(s=>norm(s.n)===n||(s.a||[]).some(a=>norm(a)===n))||null; }
+function ohneZone(name){ const n=norm(name); return OHNE_ZONE.find(s=>norm(s)===n)||null; }
+const suchLink=n=>'https://duckduckgo.com/?q='+encodeURIComponent('Allgemeinverfügung Feuerwerk Silvester '+SJ+' '+n);
+const uhrTxt=h=>{ if(h==null) return ''; const t=h>=24?h-24:h, m=Math.round((t%1)*60); return Math.floor(t)+(m?':'+String(m).padStart(2,'0'):'')+' Uhr'; };
+function zeitTxt(z){ if(z.von==null&&z.bis==null) return '31.12. und 1.1. ganztägig'; if(z.bis==null) return '31.12. ab '+uhrTxt(z.von); return '31.12. '+uhrTxt(z.von)+' bis '+(z.bis>=24?'1.1. ':'')+uhrTxt(z.bis); }
+const giltTxt={boeller:'nur Böller und Knaller (reine Knallwirkung) verboten',f2:'Raketen, Batterien und Böller (Kategorie F2) verboten',alle:'jedes Feuerwerk verboten, auch Wunderkerzen und Tischfeuerwerk'};
+function zoneTrifft(z,art,zeit){ // gilt die Zone für diese Art und Uhrzeit?
+  if(z.gilt==='boeller'&&art!=='boeller') return false;
+  if(art==='f1'&&z.gilt!=='alle') return false;
+  const h=ZEIT_STUNDE[zeit]; if(h==null) return false;
+  if(z.von==null&&z.bis==null) return true;
+  const bis=z.bis==null?48:z.bis; const hh=zeit==='tag1'?36:h; // Neujahr tagsüber
+  return hh>=z.von&&hh<=bis;
+}
+function stadtKarte(s){
+  const st=s.jahr==='2026/27'?['neu','Regeln 2026/27']:s.jahr==='angekündigt'?['alt','angekündigt']:['alt','Regeln vom Vorjahr'];
+  return `<div class="city"><div class="h"><b>${esc(s.n)}</b><span class="st ${st[0]}">${st[1]}</span></div>
+   ${s.z.map(z=>`<div class="zone"><b>${esc(z.w)}</b><small>${esc(zeitTxt(z))} · ${esc(giltTxt[z.gilt])}${z.mit?' · auch Mitführen verboten':''}</small></div>`).join('')}
+   ${s.extra?`<p class="hint">${esc(s.extra)}</p>`:''}
+   ${s.neu&&s.jahr!=='2026/27'?`<p class="hint">Neue Regeln für ${SJ}/${String(SJ+1).slice(2)} erwartet ${esc(s.neu)}.</p>`:''}
+   <p class="hint">${s.url?`<a href="${s.url}" target="_blank" rel="noopener">Amtliche Seite der Stadt</a> · `:''}<a href="${suchLink(s.n)}" target="_blank" rel="noopener">aktuelle Allgemeinverfügung suchen</a></p></div>`;
+}
+
+// ================= Overpass / Nominatim / Open-Meteo =================
+const NOMINATIM='https://nominatim.openstreetmap.org';
+const OVERPASS='https://overpass-api.de/api/interpreter';
+async function holeJson(url,opt,ms){
+  const ctl=new AbortController(), to=setTimeout(()=>ctl.abort(),ms||30000);
+  try{ const r=await fetch(url,Object.assign({signal:ctl.signal},opt||{})); if(!r.ok){ const e=new Error('HTTP '+r.status); e.status=r.status; throw e; } return await r.json(); }
+  finally{ clearTimeout(to); }
+}
+const OVERPASS_WARTEN=[0,3,6,12,20];
+async function overpassMitGeduld(body,melden){
+  let letzter;
+  for(let i=0;i<OVERPASS_WARTEN.length;i++){
+    for(let s=OVERPASS_WARTEN[i];s>0;s--){ melden(`Der OpenStreetMap-Server ist gerade ausgelastet. Neuer Versuch in ${s} s (Versuch ${i+1} von ${OVERPASS_WARTEN.length}) …`); await new Promise(r=>setTimeout(r,1000)); }
+    melden(i?`Versuch ${i+1} von ${OVERPASS_WARTEN.length} läuft – das kann bis zu einer halben Minute dauern …`:'Kirchen, Krankenhäuser, Heime und Reetdächer im Umkreis werden geladen – das kann bis zu einer halben Minute dauern …');
+    try{ return await holeJson(OVERPASS,{method:'POST',body,headers:{'Content-Type':'application/x-www-form-urlencoded'}},45000); }
+    catch(e){ letzter=e; const nochmal=e.name==='AbortError'||e instanceof TypeError||[429,502,503,504].includes(e.status); if(!nochmal) break; }
+  }
+  throw letzter;
+}
+function stadtAusAdresse(a){ return a.city||a.town||a.village||a.municipality||''; }
+async function ortSuchen(q){
+  const j=await holeJson(NOMINATIM+'/search?format=jsonv2&addressdetails=1&limit=1&countrycodes=de&accept-language=de&q='+encodeURIComponent(q));
+  if(!j.length) return null; const a=j[0].address||{};
+  return {lat:+j[0].lat,lon:+j[0].lon,name:j[0].display_name.split(',').slice(0,3).join(','),stadt:stadtAusAdresse(a)};
+}
+async function ortZuPunkt(lat,lon){
+  const j=await holeJson(NOMINATIM+'/reverse?format=jsonv2&addressdetails=1&zoom=18&accept-language=de&lat='+lat+'&lon='+lon);
+  const a=(j&&j.address)||{};
+  return {lat,lon,name:[a.road?(a.road+(a.house_number?' '+a.house_number:'')):'',a.suburb||'',stadtAusAdresse(a)].filter(Boolean).join(', ')||'Dein Standort',stadt:stadtAusAdresse(a)};
+}
+// Schutzorte nach § 23 Abs. 1 1. SprengV und Hinweise
+const KAT={
+ kirche:{t:'Kirche bzw. Gotteshaus',ic:'⛪',farbe:'#7b4fd0',recht:true},
+ krankenhaus:{t:'Krankenhaus',ic:'🏥',farbe:'#d23b3b',recht:true},
+ heim:{t:'Alten- oder Kinderheim',ic:'🏠',farbe:'#e07b00',recht:true},
+ brand:{t:'brandempfindlich (Reetdach, Fachwerk, Tankstelle)',ic:'🔥',farbe:'#b8860b',recht:true},
+ zoo:{t:'Zoo oder Tierpark',ic:'🦁',farbe:'#2f8f5b',recht:false}
+};
+function kategorie(t){
+  if(t.amenity==='hospital'||t.healthcare==='hospital') return 'krankenhaus';
+  if(t.amenity==='nursing_home'||/^(nursing_home|assisted_living)$/.test(t.social_facility||'')||(t.amenity==='social_facility'&&/senior|orphan|child|juvenile/.test(t['social_facility:for']||''))) return 'heim';
+  if(t.amenity==='place_of_worship'||/^(church|chapel|cathedral)$/.test(t.building||'')) return 'kirche';
+  if(/^(thatch|reed|straw)$/.test(t['roof:material']||'')||t['building:structure']==='timber_framing'||/half.?timbered|timber.?fram/.test(t['building:architecture']||'')||t.amenity==='fuel') return 'brand';
+  if(t.tourism==='zoo') return 'zoo';
+  return null;
+}
+async function schutzorteHolen(lat,lon,melden){
+  const a=`(around:850,${lat},${lon})`;
+  const q=`[out:json][timeout:25];(nwr["amenity"="place_of_worship"]${a};nwr["building"~"^(church|chapel|cathedral)$"]${a};nwr["amenity"="hospital"]${a};nwr["healthcare"="hospital"]${a};nwr["amenity"="nursing_home"]${a};nwr["social_facility"~"^(nursing_home|assisted_living)$"]${a};nwr["amenity"="social_facility"]["social_facility:for"~"senior|orphan|child|juvenile"]${a};nwr["roof:material"~"^(thatch|reed|straw)$"]${a};nwr["building:structure"="timber_framing"]${a};nwr["amenity"="fuel"]${a};nwr["tourism"="zoo"]${a};);out tags bb;`;
+  const j=await overpassMitGeduld('data='+encodeURIComponent(q),melden);
+  const orte=[], gesehen=new Set();
+  for(const e of j.elements||[]){ const t=e.tags||{}, k=kategorie(t); if(!k) continue;
+    const id=e.type+'/'+e.id; if(gesehen.has(id)) continue; gesehen.add(id);
+    let box; if(e.type==='node') box={s:e.lat,n:e.lat,w:e.lon,o:e.lon}; else if(e.bounds) box={s:e.bounds.minlat,n:e.bounds.maxlat,w:e.bounds.minlon,o:e.bounds.maxlon}; else continue;
+    orte.push({id,k,box,name:t.name||t.brand||'',tags:t}); }
+  return orte;
+}
+// Abstand in Metern von Punkt zu Rechteck (bei Gebäuden der Rahmen um den Grundriss – eher etwas zu nah gerechnet, also auf der sicheren Seite)
+function abstand(lat,lon,b){ const la=Math.min(Math.max(lat,b.s),b.n), lo=Math.min(Math.max(lon,b.w),b.o);
+  const dy=(lat-la)*111320, dx=(lon-lo)*111320*Math.cos(lat*Math.PI/180); return Math.hypot(dx,dy); }
+function freiheit(lat,lon,orte){ let min=Infinity, ort=null; for(const o of orte){ if(!KAT[o.k].recht) continue; const d=abstand(lat,lon,o.box); if(d<min){min=d;ort=o;} } return {d:min,ort}; }
+// nächster Punkt mit mindestens 200 m Abstand zu allen Schutzorten (Ringe alle 25 m bis 600 m)
+function freierPlatz(lat,lon,orte){
+  const mLat=1/111320, mLon=1/(111320*Math.cos(lat*Math.PI/180));
+  for(let r=25;r<=600;r+=25){ const n=Math.max(12,Math.round(2*Math.PI*r/30)); let best=null;
+    for(let i=0;i<n;i++){ const w=2*Math.PI*i/n, pl=lat+Math.cos(w)*r*mLat, po=lon+Math.sin(w)*r*mLon, f=freiheit(pl,po,orte);
+      if(f.d>=NAH&&(!best||f.d>best.f)) best={lat:pl,lon:po,r,w,f:f.d}; }
+    if(best) return best; }
+  return null;
+}
+const RICHT=['Norden','Nordosten','Osten','Südosten','Süden','Südwesten','Westen','Nordwesten'];
+const richtung=w=>RICHT[Math.round(((w*180/Math.PI)%360)/45)%8];
+async function wetterHolen(lat,lon){
+  const u=`https://api.open-meteo.com/v1/forecast?latitude=${lat.toFixed(3)}&longitude=${lon.toFixed(3)}&hourly=temperature_2m,precipitation,wind_speed_10m,wind_gusts_10m,visibility&timezone=Europe%2FBerlin&start_date=${dWert(SILV)}&end_date=${dWert(NEUJ)}`;
+  const j=await holeJson(u,null,20000); const h=j.hourly; if(!h||!h.time) return null;
+  const pick=[]; for(let i=0;i<h.time.length;i++){ const t=h.time[i]; if(t>=dWert(SILV)+'T22:00'&&t<=dWert(NEUJ)+'T01:00') pick.push(i); }
+  if(!pick.length) return null; const mx=a=>Math.max(...pick.map(i=>a[i]??0)), mn=a=>Math.min(...pick.map(i=>a[i]??1e9));
+  return {temp:Math.round(h.temperature_2m[pick[2]??pick[0]]),regen:+mx(h.precipitation).toFixed(1),wind:Math.round(mx(h.wind_speed_10m)),boe:Math.round(mx(h.wind_gusts_10m)),sicht:mn(h.visibility)};
+}
+
+// ================= Bereich: Darf ich hier? =================
+const O={ort:'',art:'raketen',zeit:'mitternacht'};
+let ORT=null, ORTE=null, WETTER=null, WFEHLER='', FEHLER='', LAEDT=false;
+function ortSeite(p){
+  vorbelegen(O,p);
+  if(!ARTEN.some(a=>a[0]===O.art)) O.art='raketen'; if(!ZEITEN.some(a=>a[0]===O.zeit)) O.zeit='mitternacht';
+  app.innerHTML=`<h2>📍 Darf ich hier zünden?</h2>
+  <p class="sub">Für deine Adresse oder deinen Standort: Abstand zu Kirchen, Krankenhäusern, Alten- und Kinderheimen und Reetdächern, Verbotszonen deiner Stadt, erlaubte Zeit und Wetter um Mitternacht – und wo der nächste Platz mit genug Abstand liegt.</p>
+  <div class="fields"><label class="field full"><span>Adresse, Platz oder Ort</span><input type="text" id="ort" autocomplete="off" placeholder="z. B. Marktplatz Hameln oder Lindenstraße 5, Celle" value="${esc(O.ort)}"></label></div>
+  <div class="step">Was willst du zünden?</div>${pillReihe('art',ARTEN,O.art)}
+  <div class="step">Wann?</div>${pillReihe('zeit',ZEITEN,O.zeit)}
+  <div class="actions"><button class="btn" id="pruefen" data-zahl>Prüfen</button><button class="btn ghost" id="gps" data-zahl>Meinen Standort nehmen</button></div>
+  <p class="hint">Beim Prüfen geht dein eingegebener Ort bzw. dein Standort an OpenStreetMap (Nominatim findet ihn, die Overpass-API die Gebäude im Umkreis von 850 m) und an Open-Meteo (Wetter). Es gibt kein Konto, und hier wird nichts gespeichert.</p>
+  <div id="out"></div>`;
+  document.getElementById('ort').oninput=e=>{O.ort=e.target.value;};
+  document.getElementById('ort').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();pruefen();}};
+  pillsBinden('art',v=>{O.art=v;zeigen();}); pillsBinden('zeit',v=>{O.zeit=v;zeigen();});
+  document.getElementById('pruefen').onclick=pruefen; document.getElementById('gps').onclick=standort;
+  if(ORT&&(!O.ort||O.ort===ORT.eingabe)) zeigen(); else { ORT=null; ORTE=null; FEHLER=''; hashSetzen('ort',O); if(O.ort) document.getElementById('out').innerHTML='<p class="hint">Tippe auf „Prüfen“, um diesen Ort zu prüfen.</p>'; }
+}
+function knopf(an){ const b=document.getElementById('pruefen'), g=document.getElementById('gps'); if(b){b.disabled=an;b.textContent=an?'Prüfung läuft …':'Prüfen';} if(g) g.disabled=an; }
+async function pruefen(){
+  const q=(document.getElementById('ort').value||'').trim(); O.ort=q;
+  if(!q){ FEHLER='Bitte gib eine Adresse, einen Platz oder einen Ort ein – oder nimm deinen Standort.'; ORT=null; ORTE=null; zeigen(); return; }
+  if(LAEDT) return; LAEDT=true; knopf(true); FEHLER='';
+  try{ const o=await ortSuchen(q); if(!o){ FEHLER='Diesen Ort hat OpenStreetMap nicht gefunden. Versuch es mit „Straße Hausnummer, Ort“ oder dem Namen eines Platzes und der Stadt.'; ORT=null; ORTE=null; }
+       else { o.eingabe=q; ORT=o; await laden(o); return; } }
+  catch(e){ FEHLER='Die Ortssuche von OpenStreetMap (Nominatim) antwortet gerade nicht ('+esc(e.message||e)+'). Versuch es in einer Minute noch einmal.'; ORT=null; ORTE=null; }
+  LAEDT=false; knopf(false); zeigen();
+}
+function standort(){
+  if(!navigator.geolocation){ FEHLER='Dein Browser gibt keinen Standort heraus. Gib die Adresse bitte von Hand ein.'; zeigen(); return; }
+  if(LAEDT) return; LAEDT=true; knopf(true); FEHLER='';
+  navigator.geolocation.getCurrentPosition(async pos=>{
+    const lat=+pos.coords.latitude.toFixed(5), lon=+pos.coords.longitude.toFixed(5);
+    let o={lat,lon,name:'Dein Standort',stadt:''};
+    try{ o=await ortZuPunkt(lat,lon); }catch(e){ o.hinweis='Den Ortsnamen konnte Nominatim gerade nicht liefern; die Verbotszonen deiner Stadt sind deshalb nicht geprüft.'; }
+    o.eingabe=''; O.ort=''; const f=document.getElementById('ort'); if(f) f.value=''; ORT=o; await laden(o);
+  }, err=>{ LAEDT=false; knopf(false); FEHLER='Standort nicht verfügbar ('+(err.code===1?'nicht erlaubt':'nicht gefunden')+'). Gib die Adresse bitte von Hand ein.'; zeigen(); }, {enableHighAccuracy:true,timeout:15000,maximumAge:60000});
+}
+async function laden(o){
+  FEHLER=''; ORTE=null; WETTER=null; WFEHLER='';
+  const melden=t=>{ const out=document.getElementById('out'); if(out) out.innerHTML=`<p class="hint">${esc(t)}</p>`; };
+  const tage=tageBis(HEUTE,SILV);
+  const wp=(tage>=0&&tage<=15)?wetterHolen(o.lat,o.lon).then(w=>{WETTER=w;}).catch(e=>{WFEHLER='Die Wettervorhersage von Open-Meteo war gerade nicht erreichbar ('+(e.message||e)+').';}):Promise.resolve();
+  try{ ORTE=await schutzorteHolen(o.lat,o.lon,melden); }
+  catch(e){ FEHLER='Die Abfrage bei OpenStreetMap (Overpass-API) hat auch nach '+OVERPASS_WARTEN.length+' Versuchen nicht geklappt ('+esc(e.name==='AbortError'?'keine Antwort nach 45 Sekunden':(e.message||e))+'). Der öffentliche Server ist zu Stoßzeiten oft ausgelastet – versuch es in ein paar Minuten noch einmal. Die Regeln deiner Stadt und die erlaubten Zeiten stehen trotzdem unten.<div class="actions"><button class="btn" id="nochmal" data-zahl>Nochmal versuchen</button></div>'; }
+  await wp; LAEDT=false; knopf(false); zeigen();
+}
+function radar(orte,frei){
+  const R=300, S=150, sk=S/R, lat=ORT.lat, lon=ORT.lon, mLon=111320*Math.cos(lat*Math.PI/180);
+  const pkt=(la,lo)=>{ const x=(lo-lon)*mLon, y=(la-lat)*111320; return [S+x*sk,S-y*sk]; };
+  let s=`<svg class="radar" viewBox="0 0 300 300" role="img" aria-label="Umgebung: Schutzorte im Umkreis von 300 Metern"><circle cx="150" cy="150" r="148" fill="none" stroke="currentColor" stroke-opacity=".15"/><circle cx="150" cy="150" r="${NAH*sk}" fill="#d23b3b" fill-opacity=".07" stroke="#d23b3b" stroke-opacity=".5" stroke-dasharray="4 4"/><circle cx="150" cy="150" r="${100*sk}" fill="none" stroke="currentColor" stroke-opacity=".12"/><text x="150" y="${150-NAH*sk-4}" font-size="10" text-anchor="middle" fill="currentColor" fill-opacity=".6">200 m</text><text x="150" y="12" font-size="10" text-anchor="middle" fill="currentColor" fill-opacity=".6">N</text>`;
+  for(const o of orte){ const c=[(o.box.s+o.box.n)/2,(o.box.w+o.box.o)/2], [x,y]=pkt(c[0],c[1]); if(Math.hypot(x-S,y-S)>148) continue;
+    s+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="6" fill="${KAT[o.k].farbe}" stroke="#fff" stroke-width="1.5"><title>${esc(KAT[o.k].t+(o.name?': '+o.name:''))}</title></circle>`; }
+  if(frei&&frei.r<=R){ const [x,y]=pkt(frei.lat,frei.lon); s+=`<path d="M150 150 L${x.toFixed(1)} ${y.toFixed(1)}" stroke="#22703a" stroke-width="2" stroke-dasharray="3 3"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="7" fill="#22a14a" stroke="#fff" stroke-width="2"><title>nächster Platz mit 200 m Abstand</title></circle>`; }
+  s+=`<circle cx="150" cy="150" r="6" fill="currentColor"/></svg>`;
+  const vorh=[...new Set(orte.map(o=>o.k))];
+  return s+`<div class="legend"><span><i style="background:currentColor"></i>dein Ort</span>${vorh.map(k=>`<span><i style="background:${KAT[k].farbe}"></i>${esc(KAT[k].t.split(' (')[0])}</span>`).join('')}${frei?'<span><i style="background:#22a14a"></i>Platz mit 200 m Abstand</span>':''}</div>`;
+}
+function zeitPruefung(){
+  const art=O.art, zt=O.zeit;
+  if(art==='f1') return {st:'ok',t:'Wunderkerzen, Knallerbsen und Tischfeuerwerk (F1) sind das ganze Jahr erlaubt – ab 12 Jahren.',s:'Auch dafür gilt: Rücksicht auf Nachbarn und Ruhezeiten.'};
+  if(zt==='anders') return {st:'bad',t:'Raketen und Böller (F2) nur am 31.12. und 1.1.',s:'An allen anderen Tagen braucht man eine Erlaubnis (§ 23 Abs. 2 1. SprengV). Ohne sie ist es eine Ordnungswidrigkeit – das Gesetz sieht bis zu 50.000 € vor.'};
+  return {st:'ok',t:'Zeit passt: F2 ist am '+dKurz(SILV)+' und '+dKurz(NEUJ)+' erlaubt – ab 18 Jahren.',s:'Bundesweit gilt der ganze 31.12. und 1.1.; manche Städte schränken die Uhrzeit in einzelnen Zonen ein (siehe unten).'};
+}
+function linksBox(){
+  const lat=ORT&&ORT.lat, lon=ORT&&ORT.lon, n=ORT&&ORT.stadt;
+  return `<div class="box"><b class="t">Selbst nachsehen</b><ul class="tips">
+   ${lat?`<li><a href="https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=17/${lat}/${lon}" target="_blank" rel="noopener">Umgebung in OpenStreetMap</a> – fehlt ein Heim oder ein Reetdach, kann jeder es dort eintragen.</li>`:''}
+   ${n?`<li><a href="${suchLink(n)}" target="_blank" rel="noopener">Allgemeinverfügung „Feuerwerk“ von ${esc(n)} suchen</a> – Städte veröffentlichen ihre Zonen meist Anfang bis Mitte Dezember.</li>`:''}
+   <li><a href="https://schrauberbits.github.io/silvester-helfer/" target="_blank" rel="noopener">Haustier in der Nähe? Der Silvester-Helfer</a> plant den Abend für Hund, Katze und Kaninchen.</li></ul></div>`;
+}
+function zeigen(){
+  const out=document.getElementById('out'); if(!out) return;
+  hashSetzen('ort',O);
+  if(FEHLER&&!ORT){ out.innerHTML=`<div class="err">${FEHLER}</div>`; return; }
+  if(!ORT){ out.innerHTML=''; return; }
+  const zp=zeitPruefung(), stadt=stadtFinden(ORT.stadt), oz=!stadt&&ohneZone(ORT.stadt);
+  const checks=[];
+  checks.push({st:zp.st,t:zp.t,s:zp.s});
+  let f=null, frei=null, nahe=[];
+  if(ORTE){
+    f=freiheit(ORT.lat,ORT.lon,ORTE);
+    nahe=ORTE.filter(o=>KAT[o.k].recht).map(o=>({o,d:abstand(ORT.lat,ORT.lon,o.box)})).filter(x=>x.d<NAH+100).sort((a,b)=>a.d-b.d);
+    if(f.d<NAH) frei=freierPlatz(ORT.lat,ORT.lon,ORTE);
+    const wer=x=>KAT[x.o.k].ic+' '+(x.o.name?esc(x.o.name)+' ('+esc(KAT[x.o.k].t.split(' (')[0])+')':esc(KAT[x.o.k].t))+' – '+meter(x.d);
+    if(f.d<100) checks.push({st:'bad',t:'Zu nah: '+wer({o:f.ort,d:f.d}),s:'In unmittelbarer Nähe von Kirchen, Krankenhäusern, Kinder- und Altersheimen und brandempfindlichen Gebäuden ist Feuerwerk verboten – auch an Silvester und auch ohne Schild (§ 23 Abs. 1 1. SprengV).'});
+    else if(f.d<NAH) checks.push({st:'warn',t:'Knapp: '+wer({o:f.ort,d:f.d}),s:'Ab wann es „unmittelbare Nähe“ ist, sagt das Gesetz nicht in Metern. Gerichte und viele Städte rechnen mit etwa 200 m, weil Raketen bis zu 180 m weit fliegen können.'});
+    else checks.push({st:'ok',t:'Kein Schutzort im Umkreis von 200 m eingetragen',s:'Geprüft: Kirchen und Gotteshäuser, Krankenhäuser, Alten- und Kinderheime, Reetdächer, Fachwerk und Tankstellen in OpenStreetMap. Fehlt dort etwas, sieht man es vor Ort – im Zweifel weiter weg gehen.'});
+    const zoo=ORTE.find(o=>o.k==='zoo'&&abstand(ORT.lat,ORT.lon,o.box)<500);
+    if(zoo) checks.push({st:'warn',t:'Zoo oder Tierpark in '+meter(abstand(ORT.lat,ORT.lon,zoo.box))+(zoo.name?': '+esc(zoo.name):''),s:'Um Zoos richten Städte oft eigene Verbotszonen ein (z. B. München, Duisburg, Krefeld). Bekanntmachung prüfen.'});
+  } else if(FEHLER){ checks.push({st:'info',t:'Abstand zu Schutzorten nicht geprüft',s:'OpenStreetMap war nicht erreichbar.'}); }
+  // Verbotszonen der Stadt
+  let zoneWarn=false;
+  if(stadt){ const treff=stadt.z.filter(z=>zoneTrifft(z,O.art,O.zeit)); zoneWarn=treff.length>0;
+    if(treff.length) checks.push({st:'warn',t:esc(stadt.n)+' hat '+(treff.length===1?'eine Verbotszone':treff.length+' Verbotszonen')+', die für dich gelten können',s:treff.map(z=>esc(z.w)+' ('+esc(zeitTxt(z))+')').join(' · ')+'. Liegt dein Ort darin, ist es dort verboten'+(treff.some(z=>z.mit)?' – teils schon das Mitführen':'')+'.'+(stadt.jahr!=='2026/27'?' Stand: Regeln vom Vorjahr.':'')});
+    else checks.push({st:'ok',t:'Die bekannten Verbotszonen in '+esc(stadt.n)+' betreffen deine Auswahl nicht',s:stadt.z.map(z=>esc(z.w)+': '+esc(giltTxt[z.gilt])+' ('+esc(zeitTxt(z))+')').join(' · ')+(stadt.jahr!=='2026/27'?' – Stand Vorjahr.':'')});
+  } else if(oz) checks.push({st:'ok',t:esc(oz)+': keine städtische Verbotszone bekannt',s:'Stand der Übersicht vom 24.11.2026. Es gelten die bundesweiten Regeln.'});
+  else if(ORT.stadt) checks.push({st:'info',t:'Verbotszonen in '+esc(ORT.stadt)+' nicht in unserer Liste',s:'Kleinere Städte haben selten eigene Zonen, Altstädte mit Fachwerk aber oft. <a href="'+suchLink(ORT.stadt)+'" target="_blank" rel="noopener">Allgemeinverfügung suchen</a>.'});
+  // Wetter
+  const tage=tageBis(HEUTE,SILV);
+  if(WETTER&&O.zeit!=='anders'){ const w=WETTER, sturm=w.boe>=62, windig=w.boe>=39, nebel=w.sicht<1000;
+    checks.push({st:sturm?'bad':windig||nebel||w.regen>=1?'warn':'ok',t:'Wetter in der Silvesternacht (22 bis 1 Uhr): '+(sturm?'stürmisch':windig?'windig':'ruhig')+(w.regen>=0.3?', Regen oder Schnee':'')+(nebel?', Nebel':''),
+     s:`${w.temp} °C, Wind bis ${w.wind} km/h, Böen bis ${w.boe} km/h, Niederschlag bis ${w.regen} mm/h, Sicht ab ${w.sicht>=10000?'über 10 km':meter(w.sicht)}.`+(sturm?' Bei Sturmböen (ab etwa 62 km/h, Windstärke 8) können Raketen weit abgetrieben werden – lieber nicht starten.':windig?' Raketen mit dem Wind im Rücken starten, die Rakete fliegt sonst auf dich oder andere zu; Abstand vergrößern.':'')+(nebel?' Bei Nebel sieht man die Effekte kaum, und der Rauch bleibt länger hängen.':'')}); }
+  else if(WFEHLER) checks.push({st:'info',t:'Wetter nicht geladen',s:esc(WFEHLER)});
+  else if(tage>15&&O.zeit!=='anders') checks.push({st:'info',t:'Wetter für die Silvesternacht: ab '+dKurz(plus(SILV,-15))+' hier',s:'Open-Meteo rechnet höchstens 16 Tage voraus. Dann zeigt der Feuerwerk-Helfer Wind, Böen, Regen und Nebel für deinen Ort.'});
+  const schlimm=checks.some(c=>c.st==='bad'), warn=checks.some(c=>c.st==='warn');
+  const artTxt=ARTEN.find(a=>a[0]===O.art)[1].replace(/^\S+\s/,'');
+  const say=schlimm?(zp.st==='bad'?'Nein – zu diesem Zeitpunkt nicht erlaubt.':f&&f.d<100?'Nein – hier nicht. '+(frei?`In ${meter(frei.r)} Richtung ${richtung(frei.w)} hast du genug Abstand.`:'Im Umkreis von 600 m ist kein Platz mit 200 m Abstand eingetragen.'):'Lieber nicht – das Wetter spricht dagegen.')
+   :warn?(f&&f.d<NAH?`Eher nicht – keine 200 m Abstand. ${frei?`In ${meter(frei.r)} Richtung ${richtung(frei.w)} ist es frei.`:''}`:zoneWarn?`Nur außerhalb der Verbotszone – prüf, ob dein Ort darin liegt.`:'Ja, wahrscheinlich – beachte den Hinweis unten.')
+   :'Ja – nach Gesetz und den bekannten Zonen spricht hier nichts dagegen.';
+  const kl=schlimm?'bad':warn?'warn':'';
+  const summary=`${artTxt} – ${ORT.name}: ${say}`;
+  out.innerHTML=`<div class="answer ${kl}"><div class="lbl">${esc(ORT.name)} · ${esc(ZEITEN.find(z=>z[0]===O.zeit)[1])}</div><div class="say">${esc(say)}</div>
+   <ul class="checks">${checks.map(c=>`<li><span class="dot ${c.st==='ok'?'':c.st}"></span><span class="s">${c.t}<small>${c.s}</small></span></li>`).join('')}</ul>
+   <div class="actions">${frei?`<a class="btn" href="https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=${frei.lat.toFixed(6)},${frei.lon.toFixed(6)}" target="_blank" rel="noopener" data-zahl>Fußweg zum freien Platz</a>`:''}<button class="btn ghost" id="share">Ergebnis teilen</button><span class="msg" id="msg"></span></div></div>
+   ${ORT.hinweis?`<p class="hint">${esc(ORT.hinweis)}</p>`:''}
+   ${FEHLER&&ORT?`<div class="err">${FEHLER}</div>`:''}
+   ${ORTE?radar(ORTE,frei):''}
+   ${frei?`<p class="hint">Der grüne Punkt ist der nächste Punkt, der mindestens 200 m von allen eingetragenen Schutzorten entfernt ist. Er kann auf einer Straße, im Wasser oder in einem Hof liegen – such dir dort eine freie Fläche ohne Bäume, Autos und Menschenmengen.</p>`:''}
+   ${nahe.length?`<details class="fine"><summary>Schutzorte bis 300 m (${nahe.length})</summary><table class="k">${nahe.map(x=>`<tr><td>${KAT[x.o.k].ic} <a href="https://www.openstreetmap.org/${x.o.id}" target="_blank" rel="noopener">${esc(x.o.name||KAT[x.o.k].t)}</a><br><small>${esc(KAT[x.o.k].t)}</small></td><td>${meter(x.d)}</td></tr>`).join('')}</table></details>`:''}
+   ${stadt?stadtKarte(stadt):''}
+   ${linksBox()}`;
+  const n=document.getElementById('nochmal'); if(n) n.onclick=()=>laden(ORT);
+  const s=document.getElementById('share'); if(s) s.onclick=()=>teilen(summary,teilLink('ort',Object.assign({},O,{ort:O.ort||ORT.name})),document.getElementById('msg'));
+}
+
+// ================= Bereich: Wer darf wann was? =================
+const R={alter:'18',kat:'f2',was:'zuenden'};
+function regelnSeite(p){
+  vorbelegen(R,p);
+  app.innerHTML=`<h2>📅 Wer darf wann was?</h2>
+  <p class="sub">Kaufen, mitbringen und zünden – nach Alter und Art des Feuerwerks, für Silvester ${SJ}/${String(SJ+1).slice(2)}.</p>
+  <div class="step">Alter</div>${pillReihe('alter',[['u12','unter 12'],['12','12 bis 17'],['18','18 oder älter']],R.alter)}
+  <div class="step">Feuerwerk</div>${pillReihe('kat',[['f1','✨ F1: Wunderkerzen, Knallerbsen, Tischfeuerwerk'],['f2','🚀 F2: Raketen, Batterien, Böller'],['f34','F3/F4 oder ohne CE-Zeichen']],R.kat)}
+  <div class="step">Was willst du?</div>${pillReihe('was',[['kaufen','in Deutschland kaufen'],['ausland','im Ausland kaufen und mitbringen'],['zuenden','zünden']],R.was)}
+  <div id="out"></div>`;
+  ['alter','kat','was'].forEach(id=>pillsBinden(id,v=>{R[id]=v;regelnZeigen();}));
+  regelnZeigen();
+}
+function regelnZeigen(){
+  hashSetzen('regeln',R);
+  const vk=verkaufsTage(SJ), out=document.getElementById('out'); let st='', say='', more='';
+  const vkTxt=vk.map(dKurz).join(', ');
+  if(R.kat==='f34'){ st='bad'; say='Nein – nur mit behördlicher Erlaubnis.';
+    more='Feuerwerk der Kategorien F3 und F4 und alles ohne CE-Zeichen und Registriernummer (Muster: 0589-F2-1234) dürfen Privatleute weder kaufen, einführen, besitzen noch zünden. Wer solche „Polenböller“ mitbringt, macht sich strafbar; die Polizei leitet ein Strafverfahren ein, und die Vernichtung zahlt der Besitzer.'; }
+  else if(R.alter==='u12'){ st='bad'; say='Nein – weder F1 noch F2.'; more='Wunderkerzen und Knallerbsen (F1) gibt es ab 12 Jahren. Kinder dürfen nur unter Aufsicht Erwachsener zuschauen.'; }
+  else if(R.kat==='f2'&&R.alter==='12'){ st='bad'; say='Nein – Raketen und Böller erst ab 18.';
+    more='Unter 18 darfst du F2 weder kaufen noch zünden, auch nicht an Silvester und auch nicht, wenn die Eltern dabei sind. Erlaubt sind dir Wunderkerzen, Knallerbsen und Tischfeuerwerk (F1).'; }
+  else if(R.kat==='f1'){ st=''; say=R.was==='zuenden'?'Ja – das ganze Jahr.':'Ja – das ganze Jahr, ab 12 Jahren.';
+    more='F1 (Kleinstfeuerwerk) darf ganzjährig verkauft, eingeführt und benutzt werden – mit CE-Zeichen und Registriernummer (Kategorie „F1“ in der Nummer). Mindestabstand laut Herstellern meist 1 m.'; }
+  else if(R.was==='kaufen'){ const vor=tageBis(HEUTE,vk[0]); st=''; say=`Ja – vom ${vkTxt} (ab 18 Jahren).`;
+    more=`F2 darf nur in diesen Tagen an Verbraucher verkauft werden (§ 22 Abs. 1 1. SprengV) – und nur in Verkaufsräumen, nicht am Marktstand oder Kiosk. Ladenschluss am 31.12. je nach Bundesland (der <a href="https://schrauberbits.github.io/feiertags-helfer/#plan" target="_blank" rel="noopener">Feiertags-Helfer</a> zeigt ihn). ${vor>0?`Verkaufsstart in ${vor} ${vor===1?'Tag':'Tagen'}.`:vor===0?'Heute ist Verkaufsstart.':''} Online bestellen geht früher; geliefert wird aber erst zu den Verkaufstagen.`; }
+  else if(R.was==='ausland'){ st='warn'; say='Ja – aber nur geprüfte Ware mit CE-Zeichen.';
+    more='Ab 18 darfst du F2 ganzjährig aus einem EU-Land mitbringen, wenn CE-Zeichen und Registriernummer drauf sind und eine deutsche Gebrauchsanweisung dabei ist. Gezündet wird trotzdem nur am 31.12. und 1.1. Viele Prüfzeichen auf Märkten in Polen und Tschechien sind laut Bundespolizei gefälscht; F3/F4 und Ware ohne Zeichen sind verboten und strafbar.'; }
+  else { st=''; say=`Ja – am ${dKurz(SILV)} und ${dKurz(NEUJ)} (ab 18 Jahren).`;
+    more='Nicht in unmittelbarer Nähe von Kirchen, Krankenhäusern, Kinder- und Altersheimen sowie brandempfindlichen Gebäuden (Reetdach, Fachwerk) – meist werden etwa 200 m angesetzt. Dazu kommen die Verbotszonen der Städte. Abstand zu Menschen laut Gebrauchsanweisung, bei Raketen meist 8 m. <a href="#ort">Deinen Ort prüfen</a>.'; }
+  out.innerHTML=`<div class="answer ${st}"><div class="say">${say}</div><div class="more">${more}</div></div>
+  <div class="box"><b class="t">Silvester ${SJ}/${String(SJ+1).slice(2)} auf einen Blick</b><ul class="tips">
+   <li>Verkauf F2: ${vkTxt}</li><li>Zünden F2: ${dKurz(SILV)} 0 Uhr bis ${dKurz(NEUJ)} 24 Uhr, ab 18 Jahren</li>
+   <li>Ein bundesweites Böllerverbot gibt es nicht; die Städte richten Verbotszonen ein (<a href="#staedte">Übersicht</a>).</li>
+   <li>Verstöße: Bußgeld, nach dem Sprengstoffgesetz bis 50.000 €; Städte nennen für Verbotszonen oft rund 200 bis 1.000 €.</li></ul></div>`;
+}
+
+// ================= Bereich: Städte =================
+const ST={stadt:''};
+function staedteSeite(p){
+  vorbelegen(ST,p);
+  app.innerHTML=`<h2>🏙️ Verbotszonen in den Städten</h2>
+  <p class="sub">${STAEDTE.length} Städte mit Zonen, Zeiten und Link zur Bekanntmachung. Grün: schon für ${SJ}/${String(SJ+1).slice(2)} veröffentlicht. Gelb: Regeln vom Vorjahr, bis die Stadt die neuen bekannt gibt.</p>
+  <label class="field"><span>Stadt suchen</span><input type="search" id="such" autocomplete="off" placeholder="z. B. Köln" value="${esc(ST.stadt)}"></label>
+  <div id="out"></div>`;
+  document.getElementById('such').oninput=e=>{ST.stadt=e.target.value;staedteZeigen();};
+  staedteZeigen();
+}
+function staedteZeigen(){
+  hashSetzen('staedte',ST);
+  const q=norm(ST.stadt), out=document.getElementById('out');
+  const liste=STAEDTE.filter(s=>!q||norm(s.n).includes(q)).sort((a,b)=>a.n.localeCompare(b.n,'de'));
+  const ohne=OHNE_ZONE.filter(s=>!q||norm(s).includes(q));
+  out.innerHTML=(liste.length?liste.map(stadtKarte).join(''):'')+
+   (ohne.length?`<div class="box"><b class="t">Ohne städtische Verbotszone (Stand 24.11.2026)</b>${ohne.join(', ')} – hier gelten die bundesweiten Regeln.</div>`:'')+
+   (!liste.length&&!ohne.length&&q?`<div class="box">Für „${esc(ST.stadt)}“ haben wir keine Angaben. <a href="${suchLink(ST.stadt)}" target="_blank" rel="noopener">Allgemeinverfügung suchen</a> oder <a href="#ort?ort=${encodeURIComponent(ST.stadt)}">Ort prüfen</a>.</div>`:'')+
+   `<p class="hint">Quellen: amtliche Bekanntmachungen der Städte (verlinkt) und die Übersicht von silvester-staedte.de, Stand 24.11.2026. Die meisten Städte veröffentlichen ihre Allgemeinverfügung Anfang bis Mitte Dezember.</p>`;
+}
+
+// ================= Startseite =================
+function start(){
+  const vk=verkaufsTage(SJ), t=tageBis(HEUTE,SILV);
+  app.innerHTML=`<h1>Darf ich hier an Silvester Raketen und Böller zünden?</h1>
+  <p class="sub">Für deine Adresse: Abstand zu Kirchen, Krankenhäusern und Heimen, Verbotszonen deiner Stadt, erlaubte Zeit und Wetter – plus der nächste Platz mit genug Abstand.</p>
+  ${t>=0?`<div class="news"><b>Silvester ${SJ}/${String(SJ+1).slice(2)}:</b> Verkauf ${vk.map(dKurz).join(', ')} · zünden nur ${dKurz(SILV)} und ${dKurz(NEUJ)} · ein bundesweites Böllerverbot gibt es auch diesmal nicht – aber Verbotszonen in vielen Städten.</div>`:''}
+  <div class="qlist">
+   <a class="q" href="#ort"><span class="ic">📍</span><span><b>Darf ich hier zünden?</b><span>Adresse oder Standort prüfen – mit Karte der Schutzorte und dem nächsten freien Platz</span></span></a>
+   <a class="q" href="#staedte"><span class="ic">🏙️</span><span><b>Verbotszonen in meiner Stadt</b><span>${STAEDTE.length} Städte mit Zonen, Uhrzeiten und Link zur Bekanntmachung</span></span></a>
+   <a class="q" href="#regeln"><span class="ic">📅</span><span><b>Wer darf wann was?</b><span>Alter, Verkaufstage, Feuerwerk aus Polen oder Tschechien</span></span></a>
+  </div>`;
+}
+
+// ================= Navigation =================
+const SEITEN={ort:ortSeite,regeln:regelnSeite,staedte:staedteSeite};
+function route(){
+  const {seite,p}=hashTeile();
+  document.getElementById('back').classList.toggle('hide',!SEITEN[seite]);
+  (SEITEN[seite]||start)(p);
+  window.scrollTo(0,0);
+}
+document.getElementById('home').onclick=()=>{history.replaceState(null,'',location.pathname+location.search);route();};
+document.getElementById('back').onclick=()=>{history.replaceState(null,'',location.pathname+location.search);route();};
+window.addEventListener('hashchange',route);
+route();
+</script>
+</body>
+</html>
